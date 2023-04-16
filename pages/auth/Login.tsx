@@ -1,5 +1,6 @@
 import React from "react";
-
+import Footer from "../scratch/Footer";
+import Link from "next/link";
 type Props = {};
 
 export default function Login({}: Props) {
@@ -91,8 +92,8 @@ export default function Login({}: Props) {
 							</button>
 							<p className="text-center">
 								Not registered yet?{" "}
-								<a
-									href="#"
+								<Link
+									href="/auth/Signup"
 									className="text-indigo-600 font-medium inline-flex space-x-1 items-center"
 								>
 									<span>Register now </span>
@@ -112,12 +113,13 @@ export default function Login({}: Props) {
 											/>
 										</svg>
 									</span>
-								</a>
+								</Link>
 							</p>
 						</div>
 					</form>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 }
