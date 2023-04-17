@@ -1,45 +1,37 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
-import category from "../../../Models/Category";
-import connectDB from "@/utils/connectDB";
+import type { NextApiRequest, NextApiResponse } from 'next';
+// import category from '../../../Models/Category';
+import connectDB from '@/utils/connectDB';
+
+import Course from '@/Models/Course';
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse,
+	res: NextApiResponse
 ) {
 	await connectDB();
-	const add_category = async (req: NextApiRequest, res: NextApiResponse) => {
+	const add_course = async (req: NextApiRequest, res: NextApiResponse) => {
 		const data = req.body;
-		console.log("data", data);
-		let dtst = category.create(data);
 
+		let dt = Course.create(data);
+		console.log('data', dt);
 		try {
 			res.status(200).json({
-				message: "inserted successfully please check your database ",
+				message: 'inserted successfully please check your database ',
 			});
 		} catch (error) {
-			// console.log('error in adding product to cart (server) => ' + error);
-			return res.status(401).json({ error: "Something went wrong" });
+			return res.status(401).json({ error: 'Something went wrong' });
 		}
 	};
-	const get_category = async (req: NextApiRequest, res: NextApiResponse) => {
-		// const data = req.body;
-		// console.log("data");
-		res.status(200).json({ message: "name not found" });
-		let receiveddata = category.find();
-		console.log("kkkkkkk", receiveddata);
-		// try {
-		// 	res.status(200).json(receiveddata);
-		// } catch (error) {
-		// 	// console.log('error in adding product to cart (server) => ' + error);
-		// 	return res.status(401).json({ error: "not found" });
-		// }
+	const get_course = async (req: NextApiRequest, res: NextApiResponse) => {
+		let receiveddata = await Course.find();
+		console.log('kkkkkkk', receiveddata);
+		res.status(200).json(receiveddata);
 	};
 	switch (req.method) {
-		case "POST":
-			await add_category(req, res);
+		case 'POST':
+			await add_course(req, res);
 			break;
-		case "GET":
-			await get_category(req, res);
+		case 'GET':
+			await get_course(req, res);
 			break;
 		// case 'PUT':
 		// 	await update_cart_data(req, res);

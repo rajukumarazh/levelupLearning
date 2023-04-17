@@ -1,0 +1,15 @@
+GET   http://localhost:3000/api/levelup/course HTTP/1.1
+###
+POST http://localhost:3000/api/levelup/course HTTP/1.1
+content-type: application/json
+
+{
+        "name": "Angular.js",
+		"price": "2060",
+		"image": "/Angular",
+        "category": "frontend",
+		"description": "this is a begginer course"
+}
+
+
+

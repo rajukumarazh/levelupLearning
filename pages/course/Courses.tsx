@@ -1,35 +1,48 @@
-import React from "react";
-import axios from "axios";
-
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 type Props = {};
-async function getData() {
-	let data = await axios.get("/api/levelup/course").then((res) => res);
-	console.log("data", data);
+interface allCourses {
+	name: string;
+	id: string;
 }
 export default function Courses({}: Props) {
+	// const [data, setData] = useState:allCourses[]();
+	const [data, setData] = React.useState<allCourses>();
+
+	async function getData() {
+		let data = await axios.get('/api/levelup/course').then((res) => res?.data);
+		setData(() => data);
+	}
+	useEffect(() => {
+		getData();
+	}, []);
+	console.log('data', data);
 	return (
 		<div>
 			<div className="max-w-sm mx-5 p-2 bg-white  flex gap-5">
-				<div className="bg-white shadow-md border border-gray-200 rounded-lg w-md dark:bg-gray-800 dark:border-gray-700">
-					<a href="#">
-						<img
-							className="rounded-t-lg"
-							src="https://flowbite.com/docs/images/blog/image-1.jpg"
-							alt=""
-						/>
-					</a>
-					<div className="p-5">
-						{/* <a href="#">
+				{data?.map(({ id, name }: any) => {
+					return (
+						<div>
+							<div className="bg-white shadow-md border border-gray-200 rounded-lg w-md dark:bg-gray-800 dark:border-gray-700">
+								<a href="#">
+									<img
+										className="rounded-t-lg"
+										src="https://flowbite.com/docs/images/blog/image-1.jpg"
+										alt=""
+									/>
+								</a>
+								<div className="p-5">
+									{/* <a href="#">
 							<h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
 								Noteworthy technology acquisitions 2021
 							</h5>
 						</a> */}
-						<p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-							Here are the biggest enterprise technology
-							acquisitions of 2021 so far, in reverse
-							chronological order.
-						</p>
-						{/* <a
+									<p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
+										Here are the biggest enterprise technology acquisitions of
+										2021 so far, in reverse chronological order.
+									</p>
+									{/* <a
 							href="#"
 							className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 						>
@@ -47,16 +60,19 @@ export default function Courses({}: Props) {
 								></path>
 							</svg>
 						</a> */}
-						<div className="flex justify-center">
-							<button
-								className="bg-blue-500 px-2 py-2 text-white rounded-lg w-52  "
-								onClick={() => getData()}
-							>
-								Enroll Now
-							</button>
+									<div className="flex justify-center">
+										<button
+											className="bg-blue-500 px-2 py-2 text-white rounded-lg w-52  "
+											onClick={() => getData()}
+										>
+											Enroll Now
+										</button>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
+					);
+				})}
 				{/*  */}
 			</div>
 		</div>

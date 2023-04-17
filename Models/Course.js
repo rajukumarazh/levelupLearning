@@ -1,13 +1,16 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
-const courseSchema = mongoose.Schema({
-	title: String,
-	description: String,
-	image_url: String,
-	category: String,
-	moodle_course_id: Number,
-	price: Number,
-});
-const coursesTableSchema = mongoose.model("courses", courseSchema);
+const CourseSchema = mongoose.Schema(
+	{
+		name: { type: String },
+		price: { type: Number },
+		image: { type: String },
+		category: { type: String },
+		description: { type: String },
+	},
+	{ timestamps: true }
+);
 
-module.exports = coursesTableSchema;
+const Course = mongoose.models.Course || mongoose.model('Course', CourseSchema);
+
+export default Course;
