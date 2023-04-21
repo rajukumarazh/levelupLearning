@@ -1,12 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 // import category from '../../../Models/Category';
 import connectDB from '@/utils/connectDB';
-
+import cors from 'cors';
+import NextCors from 'nextjs-cors';
 import Course from '@/Models/Course';
-export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse
-) {
+const corsOptions = {
+	origin: '*',
+};
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+	await NextCors(req, res, {
+		// Options
+		methods: ['POST'],
+		origin: '*',
+		optionsSuccessStatus: 200,
+	});
 	await connectDB();
 	const add_course = async (req: NextApiRequest, res: NextApiResponse) => {
 		const data = req.body;
@@ -43,3 +50,4 @@ export default async function handler(
 			return res.status(405).end(`Method ${req.method} Not Allowed`);
 	}
 }
+export default handler;

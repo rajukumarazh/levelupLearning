@@ -6,7 +6,11 @@ const CourseSchema = mongoose.Schema(
 		price: { type: Number },
 		image: { type: String },
 		category: { type: String },
-		description: { type: String },
+		// description: { type: String },.
+		stars: { type: Number },
+		duration: { type: Number },
+		tutor: { type: String },
+		rating: { type: Number },
 	},
 	{ timestamps: true }
 );

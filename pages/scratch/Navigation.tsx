@@ -1,5 +1,5 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
 type Props = {};
 
@@ -71,7 +71,7 @@ export default function Navigation({}: Props) {
 						</Link>
 						<Link
 							className="transform text-gray-700 transition-colors duration-300 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 lg:mx-8"
-							href="/course/Courses"
+							href="/scratch/Filter"
 						>
 							Course
 						</Link>
@@ -93,8 +93,8 @@ export default function Navigation({}: Props) {
 						className="mt-4 block rounded-lg bg-blue-600 px-6 py-2.5 text-center font-medium capitalize leading-5 text-white hover:bg-blue-500 lg:mt-0 lg:w-auto"
 						href="#"
 					>
-						{" "}
-						Get started{" "}
+						{' '}
+						Get started{' '}
 					</Link>
 				</div>
 			</nav>
