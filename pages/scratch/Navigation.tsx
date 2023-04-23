@@ -1,9 +1,25 @@
-import Link from 'next/link';
-import React from 'react';
-
+import Link from "next/link";
+import React from "react";
+import axios from "axios";
+import { useState } from "react";
+import { withSessionSsr } from "@/lib/config/withSession";
+import { useRouter } from "next/router";
 type Props = {};
 
-export default function Navigation({}: Props) {
+export default function Navigation(props: any) {
+	let [authStatus, setAuthStatus] = useState();
+	console.log("hello", props);
+	// setAuthStatus(res);
+	const router = useRouter();
+	async function logout(): any {
+		let res = await axios.get("/api/auth/logout").then((res) => res);
+		console.log("await", res);
+
+		if (res?.data?.ok == true) {
+			router.push("/");
+		}
+	}
+	console.log("authStatus", authStatus);
 	return (
 		<div>
 			<nav className="container mx-auto p-6 lg:flex lg:items-center lg:justify-between">
@@ -93,12 +109,33 @@ export default function Navigation({}: Props) {
 						className="mt-4 block rounded-lg bg-blue-600 px-6 py-2.5 text-center font-medium capitalize leading-5 text-white hover:bg-blue-500 lg:mt-0 lg:w-auto"
 						href="#"
 					>
-						{' '}
-						Get started{' '}
+						{" "}
+						Get started{" "}
 					</Link>
+					<button
+						onClick={logout}
+						className="mt-4 ml-2 block rounded-lg bg-red-600 px-6 py-2.5 text-center font-medium capitalize leading-5 text-white hover:bg-blue-500 lg:mt-0 lg:w-auto"
+					>
+						Log out
+					</button>
 				</div>
 			</nav>
 			<hr />
 		</div>
 	);
 }
+export const getServerSideProps = withSessionSsr(async ({ req, res }) => {
+	const user = req.session.user;
+	if (!user) {
+		// return {
+		// 	notFound: true,
+		// };
+		return {
+			props: { error: "notfound" },
+		};
+	}
+
+	return {
+		props: { user },
+	};
+});

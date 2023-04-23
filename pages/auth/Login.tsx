@@ -1,9 +1,33 @@
 import React from "react";
 import Footer from "../scratch/Footer";
+import { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/router";
 type Props = {};
-
+type login = {
+	email: string;
+	password: string;
+};
 export default function Login({}: Props) {
+	let router = useRouter();
+	let [signInData, setSignInData] = useState<login>({
+		email: "",
+		password: "",
+	});
+	console.log("dta", signInData);
+	async function login(e): any {
+		e.preventDefault();
+		let res = await axios
+			.post("http://localhost:3000/api/auth/auth", signInData)
+			.then((res) => res);
+		console.log("helloResponse", res);
+		if (res?.data?.ok) {
+			// return router.push("/scratch/Filter");
+			return router.back();
+		}
+	}
+
 	return (
 		<div>
 			{/* <style>
@@ -27,13 +51,22 @@ export default function Login({}: Props) {
 							<span>Login with Google</span>
 						</button>
 					</div>
-					<form action="" className="my-10">
+					<form action="" className="my-10" onSubmit={login}>
 						<div className="flex flex-col space-y-5">
 							<label>
 								<p className="font-medium text-slate-700 pb-2">
 									Email address
 								</p>
 								<input
+									onChange={(
+										e: React.FormEvent<HTMLInputElement>,
+									) =>
+										setSignInData({
+											...signInData,
+											email: e.currentTarget
+												.value,
+										})
+									}
 									id="email"
 									name="email"
 									type="email"
@@ -46,6 +79,16 @@ export default function Login({}: Props) {
 									Password
 								</p>
 								<input
+									onChange={(
+										e: React.FormEvent<HTMLInputElement>,
+									) =>
+										setSignInData({
+											...signInData,
+											password:
+												e.currentTarget
+													.value,
+										})
+									}
 									id="password"
 									name="password"
 									type="password"
