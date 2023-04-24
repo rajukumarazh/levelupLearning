@@ -1,33 +1,46 @@
-import { useEffect, useState } from "react";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { withSessionSsr } from "@/lib/config/withSession";
-import Router, { useRouter } from "next/router";
+import { useEffect, useState } from 'react';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { withSessionSsr } from '@/lib/config/withSession';
+import Router, { useRouter } from 'next/router';
+import { add_login_status } from '../../lib/toolkit/CourseSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 export default function Checkout(props: any) {
-	console.log("userPorps", props);
+	console.log('userPorps', props);
+	let dispatch = useDispatch();
 	const stripe = useStripe();
 	let router = useRouter();
 	const elements = useElements();
+	let allState = useSelector((state) => state);
+	console.log('allState', allState);
+	useEffect(() => {
+		if (props?.user) {
+			dispatch(add_login_status(true));
+		} else {
+			dispatch(add_login_status(false));
+		}
+	}, [props]);
 	const [amount, setAmount] = useState<number>(1000);
-	const [clientSecret, setClientSecret] = useState<string>("");
+	const [clientSecret, setClientSecret] = useState<string>('');
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const response = await fetch("/api/payment/payment_intent", {
-			method: "POST",
+		const response = await fetch('/api/payment/payment_intent', {
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
 				price: 100 * 100,
-				currency: "usd",
+				currency: 'usd',
 			}),
 			// body: JSON.stringify({ amount }),
 		});
 		const { client_secret } = await response.json();
 		setClientSecret(client_secret);
 	};
-	console.log("clientSecret", clientSecret);
+	console.log('clientSecret', clientSecret);
 	const handlePayment = async () => {
 		const cardElement = elements?.getElement(CardElement);
 		if (!stripe || !cardElement) {
@@ -39,18 +52,18 @@ export default function Checkout(props: any) {
 				payment_method: {
 					card: cardElement,
 				},
-			},
+			}
 		);
 		if (error) {
 			console.log(error);
-		} else if (paymentIntent?.status == "succeeded") {
+		} else if (paymentIntent?.status == 'succeeded') {
 			// console.log("paymentIntent", paymentIntent);
-			router.push("/payment/payment_Success");
+			router.push('/payment/payment_Success');
 		}
 	};
 	useEffect(() => {
-		if (props?.error === "notfound") {
-			router.push("/auth/Login");
+		if (props?.error === 'notfound') {
+			router.push('/auth/Login');
 		}
 	}, [props]);
 	return (
@@ -61,9 +74,7 @@ export default function Checkout(props: any) {
 					<input
 						type="number"
 						value={amount}
-						onChange={(event) =>
-							setAmount(parseInt(event.target.value))
-						}
+						onChange={(event) => setAmount(parseInt(event.target.value))}
 					/>
 				</label>
 				<CardElement />
@@ -80,8 +91,9 @@ export const getServerSideProps = withSessionSsr(async ({ req, res }) => {
 		// return {
 		// 	notFound: true,
 		// };
+
 		return {
-			props: { error: "notfound" },
+			props: { error: 'notfound' },
 		};
 	}
 

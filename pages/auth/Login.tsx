@@ -1,9 +1,11 @@
-import React from "react";
-import Footer from "../scratch/Footer";
-import { useState } from "react";
-import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/router";
+import React from 'react';
+import Footer from '../scratch/Footer';
+import { useState } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { add_login_status } from '../../lib/toolkit/CourseSlice';
+import { useDispatch } from 'react-redux';
 type Props = {};
 type login = {
 	email: string;
@@ -12,17 +14,19 @@ type login = {
 export default function Login({}: Props) {
 	let router = useRouter();
 	let [signInData, setSignInData] = useState<login>({
-		email: "",
-		password: "",
+		email: '',
+		password: '',
 	});
-	console.log("dta", signInData);
-	async function login(e): any {
+	let dispatch = useDispatch();
+	console.log('dta', signInData);
+	async function login(e: React.FormEvent): any {
 		e.preventDefault();
 		let res = await axios
-			.post("http://localhost:3000/api/auth/auth", signInData)
+			.post('http://localhost:3000/api/auth/auth', signInData)
 			.then((res) => res);
-		console.log("helloResponse", res);
+		console.log('helloResponse', res);
 		if (res?.data?.ok) {
+			dispatch(add_login_status({ status: true, user: signInData }));
 			// return router.push("/scratch/Filter");
 			return router.back();
 		}
@@ -47,24 +51,19 @@ export default function Login({}: Props) {
 								src="https://www.svgrepo.com/show/355037/google.svg"
 								className="w-6 h-6"
 								alt=""
-							/>{" "}
+							/>{' '}
 							<span>Login with Google</span>
 						</button>
 					</div>
 					<form action="" className="my-10" onSubmit={login}>
 						<div className="flex flex-col space-y-5">
 							<label>
-								<p className="font-medium text-slate-700 pb-2">
-									Email address
-								</p>
+								<p className="font-medium text-slate-700 pb-2">Email address</p>
 								<input
-									onChange={(
-										e: React.FormEvent<HTMLInputElement>,
-									) =>
+									onChange={(e: React.FormEvent<HTMLInputElement>) =>
 										setSignInData({
 											...signInData,
-											email: e.currentTarget
-												.value,
+											email: e.currentTarget.value,
 										})
 									}
 									id="email"
@@ -75,18 +74,12 @@ export default function Login({}: Props) {
 								/>
 							</label>
 							<label>
-								<p className="font-medium text-slate-700 pb-2">
-									Password
-								</p>
+								<p className="font-medium text-slate-700 pb-2">Password</p>
 								<input
-									onChange={(
-										e: React.FormEvent<HTMLInputElement>,
-									) =>
+									onChange={(e: React.FormEvent<HTMLInputElement>) =>
 										setSignInData({
 											...signInData,
-											password:
-												e.currentTarget
-													.value,
+											password: e.currentTarget.value,
 										})
 									}
 									id="password"
@@ -108,10 +101,7 @@ export default function Login({}: Props) {
 									</label>
 								</div>
 								<div>
-									<a
-										href="#"
-										className="font-medium text-indigo-600"
-									>
+									<a href="#" className="font-medium text-indigo-600">
 										Forgot Password?
 									</a>
 								</div>
@@ -134,7 +124,7 @@ export default function Login({}: Props) {
 								<span>Login</span>
 							</button>
 							<p className="text-center">
-								Not registered yet?{" "}
+								Not registered yet?{' '}
 								<Link
 									href="/auth/Signup"
 									className="text-indigo-600 font-medium inline-flex space-x-1 items-center"

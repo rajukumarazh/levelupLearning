@@ -1,17 +1,17 @@
-import React from "react";
-import Courses from "../course/Courses";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux/es/exports";
-import { useAppSelector } from "@/lib/toolkit/store";
-import { useAppDispatch } from "@/lib/toolkit/store";
+import React from 'react';
+import Courses from '../course/Courses';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { useAppSelector } from '@/lib/toolkit/store';
+import { useAppDispatch } from '@/lib/toolkit/store';
 
 import {
 	increment,
 	decrement,
 	add_all_courses,
-} from "@/lib/toolkit/CourseSlice";
-import { MultiSelect } from "react-multi-select-component";
+} from '@/lib/toolkit/CourseSlice';
+import { MultiSelect } from 'react-multi-select-component';
 
 type Props = {
 	name: string;
@@ -26,7 +26,7 @@ type fltr = {
 };
 export async function getStaticProps() {
 	let data = await axios
-		.get("http://localhost:3000/api/levelup/course")
+		.get('http://localhost:3000/api/levelup/course')
 		.then((res) => res?.data);
 	return {
 		props: { all: data }, // will be passed to the page component as props
@@ -38,9 +38,9 @@ export default function (props: Props[]) {
 		tutors: [],
 		timings: [],
 		interests: [],
-		language: "",
+		language: '',
 		fiter: true,
-		sortBy: "",
+		sortBy: '',
 	});
 	// console.log("selectedOptions", selectedOptions);
 	// console.log('prpsfilter', props);
@@ -52,49 +52,47 @@ export default function (props: Props[]) {
 	});
 	let [filteredQuestion, setFilteredQuestion] = useState();
 	let dt = useAppSelector((state) => state);
-	console.log("toolkit", dt);
+	console.log('toolkit', dt);
 	const dispatch = useAppDispatch();
 
 	const Timings = [
-		{ label: "1 hr/day ", value: "1" },
-		{ label: "2 hr/day", value: "2" },
-		{ label: "2 hr/sat/sun", value: "2/sat/sun" },
-		{ label: "3.5 hr/day ", value: "3.5", disabled: true },
-		{ label: "3.5 hr/day ", value: "3.5", disabled: false },
+		{ label: '1 hr/day ', value: '1' },
+		{ label: '2 hr/day', value: '2' },
+		{ label: '2 hr/sat/sun', value: '2/sat/sun' },
+		{ label: '3.5 hr/day ', value: '3.5', disabled: true },
+		{ label: '3.5 hr/day ', value: '3.5', disabled: false },
 	];
 	const Tutors = [
-		{ label: "Akshay Saini ", value: "Akshay_Saini" },
-		{ label: "Deepak Sharma", value: "Deepak_Sharma" },
-		{ label: "Bradd", value: "Bradd" },
-		{ label: "Hitesh Chaudhary", value: "Hitesh", disabled: true },
-		{ label: "Brad", value: "Bradd", disabled: false },
+		{ label: 'Akshay Saini ', value: 'Akshay_Saini' },
+		{ label: 'Deepak Sharma', value: 'Deepak_Sharma' },
+		{ label: 'Bradd', value: 'Bradd' },
+		{ label: 'Hitesh Chaudhary', value: 'Hitesh', disabled: true },
+		{ label: 'Brad', value: 'Bradd', disabled: false },
 	];
 	const Interest = [
-		{ label: "Front-end ", value: "frontend" },
-		{ label: "Back-end", value: "backend" },
-		{ label: "Cloud", value: "cloud" },
-		{ label: "Network-Security", value: "network", disabled: true },
-		{ label: "DATABASE", value: "database", disabled: false },
+		{ label: 'Front-end ', value: 'frontend' },
+		{ label: 'Back-end', value: 'backend' },
+		{ label: 'Cloud', value: 'cloud' },
+		{ label: 'Network-Security', value: 'network', disabled: true },
+		{ label: 'DATABASE', value: 'database', disabled: false },
 	];
 	function applyFilters() {
 		const time = selectedOptions.timings.map((E) => +E.value);
-		const tutor = selectedOptions.tutors.map((E) =>
-			E.value.toLowerCase(),
-		);
+		const tutor = selectedOptions.tutors.map((E) => E.value.toLowerCase());
 		const interest = selectedOptions.interests.map((E) =>
-			E.value.toLowerCase(),
+			E.value.toLowerCase()
 		);
 		const filters = [
 			{
-				type: "durations",
+				type: 'durations',
 				value: time,
 			},
 			{
-				type: "tutors",
+				type: 'tutors',
 				value: tutor,
 			},
 			{
-				type: "interests",
+				type: 'interests',
 				value: interest,
 			},
 		];
@@ -102,34 +100,29 @@ export default function (props: Props[]) {
 
 		if (filters[0]?.value.length > 0) {
 			dt = dt?.filter((curr) =>
-				filters[0]?.value.some(
-					(duration) => duration === curr?.duration,
-				),
+				filters[0]?.value.some((duration) => duration === curr?.duration)
 			);
 		}
 		if (filters[1]?.value.length > 0) {
 			dt = dt?.filter((curr) =>
 				filters[1]?.value.some(
-					(tutor) =>
-						tutor.toLowerCase() === curr?.tutor.toLowerCase(),
-				),
+					(tutor) => tutor.toLowerCase() === curr?.tutor.toLowerCase()
+				)
 			);
 		}
 		if (filters[2]?.value.length > 0) {
 			dt = dt?.filter((curr) =>
 				filters[2]?.value.some(
-					(interest) =>
-						interest.toLowerCase() ===
-						curr?.category.toLowerCase(),
-				),
+					(interest) => interest.toLowerCase() === curr?.category.toLowerCase()
+				)
 			);
 		}
 		if (
 			selectedOptions?.sortBy !== undefined &&
-			selectedOptions?.sortBy == "LTH"
+			selectedOptions?.sortBy == 'LTH'
 		) {
 			dt = dt && dt.slice().sort((a, b) => a?.price - b?.price);
-		} else if (selectedOptions?.sortBy == "HTL") {
+		} else if (selectedOptions?.sortBy == 'HTL') {
 			dt = dt && dt.slice().sort((a, b) => b?.price - a?.price);
 		}
 		setFilteredQuestion(dt);
@@ -194,8 +187,8 @@ export default function (props: Props[]) {
 	useEffect(() => {
 		dispatch(add_all_courses(props));
 	}, []);
-	console.log("selectedOption", selectedOptions);
-	console.log("filteredQuestion", filteredQuestion);
+	console.log('selectedOption', selectedOptions);
+	console.log('filteredQuestion', filteredQuestion);
 	return (
 		<div>
 			<div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
@@ -212,9 +205,7 @@ export default function (props: Props[]) {
 								id="menu-button"
 								aria-expanded="false"
 								aria-haspopup="true"
-								onClick={(
-									event: React.MouseEvent<HTMLElement>,
-								) => {
+								onClick={(event: React.MouseEvent<HTMLElement>) => {
 									setFilter({
 										...filter,
 										short: !filter.short,
@@ -265,7 +256,7 @@ export default function (props: Props[]) {
 										onClick={() =>
 											setSelectedOptions({
 												...selectedOptions,
-												sortBy: "MR",
+												sortBy: 'MR',
 											})
 										}
 										className="text-gray-500 block px-4 py-2 text-sm"
@@ -280,7 +271,7 @@ export default function (props: Props[]) {
 										onClick={() =>
 											setSelectedOptions({
 												...selectedOptions,
-												sortBy: "NEW",
+												sortBy: 'NEW',
 											})
 										}
 										className="text-gray-500 block px-4 py-2 text-sm"
@@ -295,7 +286,7 @@ export default function (props: Props[]) {
 										onClick={() =>
 											setSelectedOptions({
 												...selectedOptions,
-												sortBy: "LTH",
+												sortBy: 'LTH',
 											})
 										}
 										className="text-gray-500 block px-4 py-2 text-sm"
@@ -310,7 +301,7 @@ export default function (props: Props[]) {
 										onClick={() =>
 											setSelectedOptions({
 												...selectedOptions,
-												sortBy: "HTL",
+												sortBy: 'HTL',
 											})
 										}
 										className="text-gray-500 block px-4 py-2 text-sm"
@@ -381,9 +372,7 @@ export default function (props: Props[]) {
 											type="button"
 											className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
 										>
-											<span className="sr-only">
-												Close menu
-											</span>
+											<span className="sr-only">Close menu</span>
 											<svg
 												className="h-6 w-6"
 												fill="none"
@@ -403,54 +392,37 @@ export default function (props: Props[]) {
 
 									{/* <!-- Filters --> */}
 									<div className="mt-4 border-t border-gray-200">
-										<h3 className="sr-only">
-											Categories
-										</h3>
+										<h3 className="sr-only">Categories</h3>
 										<ul
 											role="list"
 											className="px-2 py-3 font-medium text-gray-900"
 										>
 											<li>
-												<a
-													href="#"
-													className="block px-2 py-3"
-												>
+												<a href="#" className="block px-2 py-3">
 													Javascript
 												</a>
 											</li>
 
 											<li>
-												<a
-													href="#"
-													className="block px-2 py-3"
-												>
+												<a href="#" className="block px-2 py-3">
 													Python
 												</a>
 											</li>
 
 											<li>
-												<a
-													href="#"
-													className="block px-2 py-3"
-												>
+												<a href="#" className="block px-2 py-3">
 													Typescript
 												</a>
 											</li>
 
 											<li>
-												<a
-													href="#"
-													className="block px-2 py-3"
-												>
+												<a href="#" className="block px-2 py-3">
 													Golang
 												</a>
 											</li>
 
 											<li>
-												<a
-													href="#"
-													className="block px-2 py-3"
-												>
+												<a href="#" className="block px-2 py-3">
 													OOPS
 												</a>
 											</li>
@@ -495,10 +467,7 @@ export default function (props: Props[]) {
 												</button>
 											</h3>
 											{/* <!-- Filter section, show/hide based on section state. --> */}
-											<div
-												className="pt-6"
-												id="filter-section-mobile-0"
-											>
+											<div className="pt-6" id="filter-section-mobile-0">
 												<div className="space-y-6">
 													<div className="flex items-center">
 														<input
@@ -639,10 +608,7 @@ export default function (props: Props[]) {
 												</button>
 											</h3>
 											{/* <!-- Filter section, show/hide based on section state. --> */}
-											<div
-												className="pt-6"
-												id="filter-section-mobile-1"
-											>
+											<div className="pt-6" id="filter-section-mobile-1">
 												<div className="space-y-6">
 													<div className="flex items-center">
 														<input
@@ -656,9 +622,7 @@ export default function (props: Props[]) {
 															htmlFor="filter-mobile-category-0"
 															className="ml-3 min-w-0 flex-1 text-gray-500"
 														>
-															World
-															Of
-															Courses
+															World Of Courses
 														</label>
 													</div>
 
@@ -769,10 +733,7 @@ export default function (props: Props[]) {
 												</button>
 											</h3>
 											{/* <!-- Filter section, show/hide based on section state. --> */}
-											<div
-												className="pt-6"
-												id="filter-section-mobile-2"
-											>
+											<div className="pt-6" id="filter-section-mobile-2">
 												<div className="space-y-6">
 													<div className="flex items-center">
 														<input
@@ -883,32 +844,24 @@ export default function (props: Props[]) {
 								aria-labelledby="products-heading"
 								className="pb-24 pt-6"
 							>
-								<h2
-									id="products-heading"
-									className="sr-only"
-								>
+								<h2 id="products-heading" className="sr-only">
 									Products
 								</h2>
 
 								<div className="grid grid-cols-1 ">
 									{/* <!-- Filters --> */}
 									<div className="hidden lg:block ">
-										<h3 className="sr-only">
-											Categories
-										</h3>
+										<h3 className="sr-only">Categories</h3>
 										<ul
 											role="list"
 											className="space-y-4 border-b border-blue-200 pb-6 text-sm font-medium text-gray-900"
 										>
 											<li
 												onClick={(e) =>
-													setSelectedOptions(
-														{
-															...selectedOptions,
-															language:
-																"javascript",
-														},
-													)
+													setSelectedOptions({
+														...selectedOptions,
+														language: 'javascript',
+													})
 												}
 												className="bg-gray-200 rounded-md text-black p-1 hover:to-blue-500 cursor-pointer"
 											>
@@ -917,13 +870,10 @@ export default function (props: Props[]) {
 
 											<li
 												onClick={(e) =>
-													setSelectedOptions(
-														{
-															...selectedOptions,
-															language:
-																"Typescript",
-														},
-													)
+													setSelectedOptions({
+														...selectedOptions,
+														language: 'Typescript',
+													})
 												}
 												className="bg-gray-200 rounded-md text-black p-1 hover:to-blue-500 cursor-pointer"
 											>
@@ -932,13 +882,10 @@ export default function (props: Props[]) {
 
 											<li
 												onClick={(e) =>
-													setSelectedOptions(
-														{
-															...selectedOptions,
-															language:
-																"Python",
-														},
-													)
+													setSelectedOptions({
+														...selectedOptions,
+														language: 'Python',
+													})
 												}
 												className="bg-gray-200 rounded-md text-black p-1 hover:to-blue-500 cursor-pointer"
 											>
@@ -947,13 +894,10 @@ export default function (props: Props[]) {
 
 											<li
 												onClick={(e) =>
-													setSelectedOptions(
-														{
-															...selectedOptions,
-															language:
-																"Golang",
-														},
-													)
+													setSelectedOptions({
+														...selectedOptions,
+														language: 'Golang',
+													})
 												}
 												className="bg-gray-200 rounded-md text-black p-1 hover:to-blue-500 cursor-pointer"
 											>
@@ -962,13 +906,10 @@ export default function (props: Props[]) {
 
 											<li
 												onClick={(e) =>
-													setSelectedOptions(
-														{
-															...selectedOptions,
-															language:
-																"MongoDb",
-														},
-													)
+													setSelectedOptions({
+														...selectedOptions,
+														language: 'MongoDb',
+													})
 												}
 												className="bg-gray-200 rounded-md text-black p-1 hover:to-blue-500 cursor-pointer"
 											>
@@ -1126,44 +1067,28 @@ export default function (props: Props[]) {
 
 											<MultiSelect
 												options={Timings}
-												value={
-													selectedOptions.timings
-												}
-												onChange={(
-													value: any,
-												) =>
-													setSelectedOptions(
-														(
-															prevState,
-														) => ({
-															...prevState,
-															timings: value,
-														}),
-													)
+												value={selectedOptions.timings}
+												onChange={(value: any) =>
+													setSelectedOptions((prevState) => ({
+														...prevState,
+														timings: value,
+													}))
 												}
 												labelledBy="Color"
 											/>
 										</div>
 
 										{/* <div className="border-b border-gray-200 py-6"> */}
-										<span className="font-medium text-gray-900">
-											Tutor
-										</span>
+										<span className="font-medium text-gray-900">Tutor</span>
 
 										<MultiSelect
 											options={Tutors}
-											value={
-												selectedOptions.tutors
-											}
+											value={selectedOptions.tutors}
 											onChange={(value: any) =>
-												setSelectedOptions(
-													(
-														prevState,
-													) => ({
-														...prevState,
-														tutors: value,
-													}),
-												)
+												setSelectedOptions((prevState) => ({
+													...prevState,
+													tutors: value,
+												}))
 											}
 											labelledBy="Color"
 										/>
@@ -1176,19 +1101,12 @@ export default function (props: Props[]) {
 
 										<MultiSelect
 											options={Interest}
-											value={
-												selectedOptions.interests
-											}
+											value={selectedOptions.interests}
 											onChange={(value: any) =>
-												setSelectedOptions(
-													(
-														prevState,
-													) => ({
-														...prevState,
-														interests:
-															value,
-													}),
-												)
+												setSelectedOptions((prevState) => ({
+													...prevState,
+													interests: value,
+												}))
 											}
 											labelledBy="Color"
 										/>
