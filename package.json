@@ -19,10 +19,6 @@
     "@types/redux-saga": "^0.10.5",
     "autoprefixer": "10.4.14",
     "axios": "^1.3.5",
-<<<<<<< HEAD
-    "mongoose": "^7.0.3",
-    "next": "13.3.0",
-=======
     "cors": "^2.8.5",
     "iron-session": "^6.3.1",
     "mongodb": "^5.2.0",
@@ -34,7 +30,6 @@
     "paypal-rest-sdk": "^1.8.1",
     "plotly.js": "^2.22.0",
     "plotly.js-dist": "^2.22.0",
->>>>>>> ab26a093d9a23a202a6c19d219edc203c66c58e9
     "postcss": "8.4.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
