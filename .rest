@@ -19,3 +19,14 @@ content-type: application/json
   "email":"test@gmail.com",
   "password":"password"
 }
+
+
+##########
+POST http://localhost:3000/api/payment/enrollments HTTP/1.1
+content-type: application/json
+
+{
+  "user":"rajukumar",
+  "user_id":"64465e44134a166ea77f3a03",
+  "course_id":"643fe3e02adf10305cd268f0"
+}

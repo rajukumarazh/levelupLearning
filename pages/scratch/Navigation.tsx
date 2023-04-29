@@ -36,18 +36,22 @@ export default function Navigation(props: any) {
 		}
 	}
 
-	console.log('router.path', router);
-	console.log('authStatus', authStatus);
+	// console.log('router.path', router);
+	// console.log('authStatus', authStatus);
 	return (
 		<div>
 			<nav className="container mx-auto p-6 lg:flex lg:items-center lg:justify-between">
-				<div className="flex items-center justify-between">
+				<div className="flex flex-start justify-between">
 					<div>
 						<a
 							className="text-2xl font-bold text-gray-800 hover:text-gray-700 dark:text-white dark:hover:text-gray-300 lg:text-3xl"
-							href="#"
+							href="/"
 						>
-							LevelUp
+							<img
+								src="/LevelUplogo.png"
+								alt="site log"
+								className="w-30 h-12"
+							/>
 						</a>
 					</div>
 
@@ -181,17 +185,19 @@ export default function Navigation(props: any) {
 
                   Selected: "font-medium text-gray-900", Not Selected: "text-gray-500"
                 --> */}
-										<a
-											href="#"
-											className="font-medium text-gray-900 block px-4 py-2 text-sm"
+										<p
+											// href="#"
+											className="font-medium text-red-600 block px-4 py-2 text-sm underline"
 											role="menuitem"
 											tabIndex={-1}
 											id="menu-item-0"
 										>
-											Profile
-										</a>
+											{/* Hello! {AllState?.courses?.current_user?.data?.Email} */}
+											{`${AllState?.courses?.current_user?.data?.Email}?hello`}
+										</p>
 
-										<button
+										<Link
+											href={`/payment/${AllState?.courses?.current_user?.data?._id}`}
 											// onClick={() =>
 											// 	setSelectedOptions({
 											// 		...selectedOptions,
@@ -204,7 +210,7 @@ export default function Navigation(props: any) {
 											id="menu-item-1"
 										>
 											Purchase history
-										</button>
+										</Link>
 
 										<button
 											// onClick={() =>

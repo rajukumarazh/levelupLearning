@@ -25,10 +25,10 @@ export default function Login({}: Props) {
 			.post('http://localhost:3000/api/auth/auth', signInData)
 			.then((res) => res);
 		console.log('helloResponse', res);
-		if (res?.data?.ok) {
-			dispatch(add_login_status({ status: true, user: signInData }));
-			// return router.push("/scratch/Filter");
-			return router.back();
+		if (res?.data?.ok === true) {
+			dispatch(add_login_status({ status: true, user: res?.data }));
+			return router.push('/scratch/Filter');
+			// return router.back();
 		}
 	}
 

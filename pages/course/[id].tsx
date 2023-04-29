@@ -3,12 +3,9 @@ import Image from 'next/image';
 import { useAppSelector } from '@/lib/toolkit/store';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
-import {
-	PayPalScriptProvider,
-	PayPalHostedFieldsProvider,
-	PayPalHostedField,
-	usePayPalHostedFields,
-} from '@paypal/react-paypal-js';
+import { add_current_course } from '@/lib/toolkit/CourseSlice';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 type Props = {
 	clientToken: string;
 	clientID: string;
@@ -17,10 +14,16 @@ type Props = {
 export default function ViewCourse({}: Props) {
 	let dt = useAppSelector((state) => state);
 	let router = useRouter();
-	console.log('dddRouter', router);
+	let dispatch = useDispatch();
+	// console.log('dddRouter', router);
 	let selectedCoures = dt?.courses?.courses?.filter(
 		(curr: any) => curr._id == router?.query?.id
 	);
+	useEffect(() => {
+		if (selectedCoures.length) {
+			dispatch(add_current_course(selectedCoures));
+		}
+	}, []);
 	console.log('dtView', selectedCoures);
 	return (
 		<div>
@@ -103,7 +106,7 @@ export default function ViewCourse({}: Props) {
 				{/* <CoursePreface />
 			{allState.levelUp.learning_status ? <CourseLearning /> : ""} */}
 			</div>
-			<div className="flex justify-end">
+			<div className="flex justify-end p-1">
 				<Link
 					href="/payment/stripe_checkout"
 					className="  p-1 h-10 text-white bg-green-400 rounded-md hover:bg-red-500  "

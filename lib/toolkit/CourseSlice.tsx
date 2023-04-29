@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const CourseSlice = createSlice({
-	name: 'counter',
+	name: 'Levelup.com',
 	initialState: {
 		value: 0,
 		courses: [],
 		filtered_courses: [],
 		isLogIn: false,
 		current_user: [],
+		current_course: [],
 	},
 	reducers: {
 		increment: (state) => {
@@ -26,8 +27,16 @@ const CourseSlice = createSlice({
 			state.isLogIn = action?.payload?.status;
 			state.current_user = action?.payload?.user;
 		},
+		add_current_course: (state, action) => {
+			state.current_course = action.payload;
+		},
 	},
 });
 export default CourseSlice;
-export const { decrement, increment, add_all_courses, add_login_status } =
-	CourseSlice.actions;
+export const {
+	decrement,
+	increment,
+	add_all_courses,
+	add_login_status,
+	add_current_course,
+} = CourseSlice.actions;
