@@ -1,0 +1,32 @@
+POST http://localhost:3000/api/auth/register HTTP/1.1
+content-type: application/json
+
+{
+  "Email":"test@gmail.com",
+  "Password":"password",
+  "Confirm_Password":"password",
+  # "Phone_Number":"1223434",
+  "First_Name":"raju",
+  "Last_Name":"kumar"
+  
+}
+
+########
+POST http://localhost:3000/api/auth/auth HTTP/1.1
+content-type: application/json
+
+{
+  "email":"test@gmail.com",
+  "password":"password"
+}
+
+
+##########
+POST http://localhost:3000/api/payment/enrollments HTTP/1.1
+content-type: application/json
+
+{
+  "user":"rajukumar",
+  "user_id":"64465e44134a166ea77f3a03",
+  "course_id":"643fe3e02adf10305cd268f0"
+}

@@ -1,8 +1,27 @@
-import React from "react";
-
+import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 type Props = {};
-
+type data = {
+	Email: String;
+	Password: String;
+	Confirm_Password: String;
+	First_Name: String;
+	Last_Name: String;
+};
 export default function Signup({}: Props) {
+	let [signup, setSignup] = useState<data>();
+	let router = useRouter();
+	async function HandleSubmit(e: React.FormEvent) {
+		e.preventDefault();
+		console.log('dfdfdfdfd', signup);
+		let dt = await axios.post('/api/auth/register', signup).then((res) => res);
+		console.log('signup', dt);
+		if (dt?.status == 200) {
+			router.push('/');
+		}
+	}
 	return (
 		<div>
 			<section className="bg-white dark:bg-gray-900">
@@ -25,9 +44,8 @@ export default function Signup({}: Props) {
 							</h1>
 
 							<p className="mt-4 text-gray-500 dark:text-gray-400">
-								Let’s get you all set up so you can
-								verify your personal account and begin
-								setting up your profile.
+								Let’s get you all set up so you can verify your personal account
+								and begin setting up your profile.
 							</p>
 
 							<div className="mt-6">
@@ -52,9 +70,7 @@ export default function Signup({}: Props) {
 											/>
 										</svg>
 
-										<span className="mx-2">
-											client
-										</span>
+										<span className="mx-2">client</span>
 									</button>
 
 									<button className="flex justify-center w-full px-6 py-3 mt-4 text-blue-500 border border-blue-500 rounded-md md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none">
@@ -73,20 +89,27 @@ export default function Signup({}: Props) {
 											/>
 										</svg>
 
-										<span className="mx-2">
-											worker
-										</span>
+										<span className="mx-2">worker</span>
 									</button>
 								</div>
 							</div>
 
-							<form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
+							<form
+								className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2"
+								onSubmit={HandleSubmit}
+							>
 								<div>
 									<label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
 										First Name
 									</label>
 									<input
 										type="text"
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											setSignup({
+												...signup,
+												First_Name: e.currentTarget.value,
+											})
+										}
 										placeholder="John"
 										className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
 									/>
@@ -97,6 +120,12 @@ export default function Signup({}: Props) {
 										Last name
 									</label>
 									<input
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											setSignup({
+												...signup,
+												Last_Name: e.currentTarget.value,
+											})
+										}
 										type="text"
 										placeholder="Snow"
 										className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -119,6 +148,12 @@ export default function Signup({}: Props) {
 										Email address
 									</label>
 									<input
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											setSignup({
+												...signup,
+												Email: e.currentTarget.value,
+											})
+										}
 										type="email"
 										placeholder="johnsnow@example.com"
 										className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -130,6 +165,12 @@ export default function Signup({}: Props) {
 										Password
 									</label>
 									<input
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											setSignup({
+												...signup,
+												Password: e.currentTarget.value,
+											})
+										}
 										type="password"
 										placeholder="Enter your password"
 										className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -141,6 +182,12 @@ export default function Signup({}: Props) {
 										Confirm password
 									</label>
 									<input
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											setSignup({
+												...signup,
+												Confirm_Password: e.currentTarget.value,
+											})
+										}
 										type="password"
 										placeholder="Enter your password"
 										className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"

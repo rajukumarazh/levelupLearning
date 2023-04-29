@@ -5,116 +5,17 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
 	return (
-		// <main classNameName="flex min-h-screen flex-col items-center justify-between p-24">
-		// 	<p>Homepage 13</p>
-		// </main>
-		// landing page from tailwind component
 		<div>
 			<main>
 				<section className="bg-white dark:bg-gray-900">
-					<nav className="container mx-auto p-6 lg:flex lg:items-center lg:justify-between">
-						<div className="flex items-center justify-between">
-							<div>
-								<a
-									className="text-2xl font-bold text-gray-800 hover:text-gray-700 dark:text-white dark:hover:text-gray-300 lg:text-3xl"
-									href="#"
-								>
-									Brand
-								</a>
-							</div>
-
-							{/* <!-- Mobile menu button --> */}
-							<div className="flex lg:hidden">
-								<button
-									x-cloak
-									type="button"
-									className="text-gray-500 hover:text-gray-600 focus:text-gray-600 focus:outline-none dark:text-gray-200 dark:hover:text-gray-400 dark:focus:text-gray-400"
-									aria-label="toggle menu"
-								>
-									<svg
-										x-show="!isOpen"
-										xmlns="http://www.w3.org/2000/svg"
-										className="h-6 w-6"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										stroke-width="2"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M4 8h16M4 16h16"
-										/>
-									</svg>
-
-									<svg
-										x-show="isOpen"
-										xmlns="http://www.w3.org/2000/svg"
-										className="h-6 w-6"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										stroke-width="2"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M6 18L18 6M6 6l12 12"
-										/>
-									</svg>
-								</button>
-							</div>
-						</div>
-
-						{/* <!-- Mobile Menu open: "block", Menu closed: "hidden" --> */}
-						<div className="absolute inset-x-0 z-20 w-full bg-white px-6 py-4 shadow-md transition-all duration-300 ease-in-out dark:bg-gray-900 lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:dark:bg-transparent">
-							<div className="lg:-px-8 flex flex-col space-y-4 lg:mt-0 lg:flex-row lg:space-y-0">
-								<a
-									className="transform text-gray-700 transition-colors duration-300 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 lg:mx-8"
-									href="#"
-								>
-									Home
-								</a>
-								<a
-									className="transform text-gray-700 transition-colors duration-300 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 lg:mx-8"
-									href="#"
-								>
-									Components
-								</a>
-								<a
-									className="transform text-gray-700 transition-colors duration-300 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 lg:mx-8"
-									href="#"
-								>
-									Pricing
-								</a>
-								<a
-									className="transform text-gray-700 transition-colors duration-300 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 lg:mx-8"
-									href="#"
-								>
-									Contact
-								</a>
-							</div>
-
-							<a
-								className="mt-4 block rounded-lg bg-blue-600 px-6 py-2.5 text-center font-medium capitalize leading-5 text-white hover:bg-blue-500 lg:mt-0 lg:w-auto"
-								href="#"
-							>
-								{" "}
-								Get started{" "}
-							</a>
-						</div>
-					</nav>
-
 					<div className="container mx-auto px-6 py-16 text-center">
 						<div className="mx-auto max-w-lg">
 							<h1 className="text-3xl font-bold text-gray-800 dark:text-white lg:text-4xl">
-								Building Your Next App with our Awesome
-								components
+								Build your career with LevelUp
 							</h1>
 							<p className="mt-6 text-gray-500 dark:text-gray-300">
-								Lorem ipsum dolor sit, amet consectetur
-								adipisicing elit. Libero similique
-								obcaecati illum mollitia.
+								ensure job security with work with Top
+								most rated organisation
 							</p>
 							<button className="mt-6 rounded-lg bg-blue-600 px-6 py-2.5 text-center text-sm font-medium capitalize leading-5 text-white hover:bg-blue-500 focus:outline-none lg:mx-0 lg:w-auto">
 								Start 14-Day free trial
@@ -136,12 +37,13 @@ export default function Home() {
 				<section className="bg-white dark:bg-gray-900">
 					<div className="container mx-auto px-6 py-10">
 						<h1 className="text-center text-3xl font-semibold capitalize text-gray-800 dark:text-white lg:text-4xl">
-							Portfolio
+							Our Course's
 						</h1>
 
 						<p className="mt-4 text-center text-gray-500 dark:text-gray-300">
-							Lorem ipsum dolor sit amet consectetur,
-							adipisicing elit. Nostrum quam voluptatibus
+							with broad area of scope and future your
+							journey can start here with your smart
+							choice's
 						</p>
 
 						<div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 xl:mt-12 xl:grid-cols-3 xl:gap-12">
@@ -152,7 +54,8 @@ export default function Home() {
 									alt=""
 								/>
 								<h2 className="mt-4 text-2xl font-semibold capitalize text-gray-800 dark:text-white">
-									Best website collections
+									Website Development & Moodle
+									Development
 								</h2>
 								<p className="mt-2 text-lg uppercase tracking-wider text-blue-500 dark:text-blue-400">
 									Website
@@ -166,7 +69,7 @@ export default function Home() {
 									alt=""
 								/>
 								<h2 className="mt-4 text-2xl font-semibold capitalize text-gray-800 dark:text-white">
-									Block of Ui kit collections
+									Ui Development
 								</h2>
 								<p className="mt-2 text-lg uppercase tracking-wider text-blue-500 dark:text-blue-400">
 									Ui kit
@@ -180,10 +83,10 @@ export default function Home() {
 									alt=""
 								/>
 								<h2 className="mt-4 text-2xl font-semibold capitalize text-gray-800 dark:text-white">
-									Ton’s of mobile mockup
+									Backend with multiple Technology
 								</h2>
 								<p className="mt-2 text-lg uppercase tracking-wider text-blue-500 dark:text-blue-400">
-									Mockups
+									Backend
 								</p>
 							</div>
 						</div>
@@ -204,11 +107,13 @@ export default function Home() {
 							</div>
 
 							<p className="mx-auto mt-6 max-w-2xl text-center text-gray-500 dark:text-gray-300">
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elit. Illo incidunt ex
-								placeat modi magni quia error alias,
-								adipisci rem similique, at omnis
-								eligendi optio eos harum.
+								Our team member is well proficient and
+								expirienced and they worked with
+								multiple MNC's so you can collect set
+								knowledge about multiple set of
+								Technology which boost your knowledge
+								and provide good hike on your current
+								package
 							</p>
 						</div>
 					</div>
@@ -1097,7 +1002,7 @@ export default function Home() {
 					</div>
 				</section>
 
-				<footer className="bg-white dark:bg-gray-900">
+				{/* <footer className="bg-white dark:bg-gray-900">
 					<div className="container mx-auto px-6 py-12">
 						<div className="md:-mx-3 md:flex md:items-center md:justify-between">
 							<h1 className="text-3xl font-semibold tracking-tight text-gray-800 dark:text-white md:mx-3 xl:text-4xl">
@@ -1252,7 +1157,7 @@ export default function Home() {
 							</p>
 						</div>
 					</div>
-				</footer>
+				</footer> */}
 			</main>
 		</div>
 	);
