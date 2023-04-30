@@ -30,3 +30,13 @@ content-type: application/json
   "user_id":"64465e44134a166ea77f3a03",
   "course_id":"643fe3e02adf10305cd268f0"
 }
+
+#########
+POST http://localhost:3000/api/levelup/CourseData/theory HTTP/1.1
+content-type: application/json
+
+{
+  "chapter":"rajukumar",
+  "details":"hello student your chapter is here",
+  "course_id":"643fe3e02adf10305cd268f0"
+}

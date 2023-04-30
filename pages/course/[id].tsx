@@ -1,11 +1,11 @@
-import React from 'react';
-import Image from 'next/image';
-import { useAppSelector } from '@/lib/toolkit/store';
-import { useRouter } from 'next/dist/client/router';
-import Link from 'next/link';
-import { add_current_course } from '@/lib/toolkit/CourseSlice';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import Image from "next/image";
+import { useAppSelector } from "@/lib/toolkit/store";
+import { useRouter } from "next/dist/client/router";
+import Link from "next/link";
+import { add_current_course } from "@/lib/toolkit/CourseSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 type Props = {
 	clientToken: string;
 	clientID: string;
@@ -17,14 +17,14 @@ export default function ViewCourse({}: Props) {
 	let dispatch = useDispatch();
 	// console.log('dddRouter', router);
 	let selectedCoures = dt?.courses?.courses?.filter(
-		(curr: any) => curr._id == router?.query?.id
+		(curr: any) => curr._id == router?.query?.id,
 	);
 	useEffect(() => {
 		if (selectedCoures.length) {
 			dispatch(add_current_course(selectedCoures));
 		}
 	}, []);
-	console.log('dtView', selectedCoures);
+	console.log("dtView", selectedCoures);
 	return (
 		<div>
 			<div className="mt-14 bg-slate-100">
@@ -39,7 +39,8 @@ export default function ViewCourse({}: Props) {
 											Featured Courses
 										</span>
 										<h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-100">
-											Namaste &nbsp;{selectedCoures[0]?.name}
+											Namaste &nbsp;
+											{selectedCoures[0]?.name}
 											{/* {
 											course?.[0].courses[0]
 												.course_name
@@ -48,16 +49,26 @@ export default function ViewCourse({}: Props) {
 											{/* enroll now */}
 										</h1>
 										<p className="text-indigo-200 text-base pb-6">
-											From local banks to local government, we partner with
-											organizations on their journey to digital transformation.
-											Our customers include 15 million professionals in 175
-											countries and 800 of the fortune 1000.
+											From local banks to local
+											government, we partner
+											with organizations on
+											their journey to digital
+											transformation. Our
+											customers include 15
+											million professionals in
+											175 countries and 800 of
+											the fortune 1000.
 										</p>
 										<p className="text-indigo-200 text-base pb-8">
-											We can't believe how far we have come in the last 6
-											months. I really did not think this awesome career move
-											would come so quickly. Thanks to each of you put into SI
-											and the partner relationships.
+											We can't believe how far
+											we have come in the last
+											6 months. I really did
+											not think this awesome
+											career move would come so
+											quickly. Thanks to each
+											of you put into SI and
+											the partner
+											relationships.
 										</p>
 										<div className="flex items-center justify-between">
 											<div className="flex items-center pb-12">
@@ -65,8 +76,12 @@ export default function ViewCourse({}: Props) {
 													<Image
 														alt="not found"
 														src="/akshaysaini.jpg"
-														width={120}
-														height={50}
+														width={
+															120
+														}
+														height={
+															50
+														}
 														className="h-full w-full object-cover overflow-hidden rounded-full"
 													/>
 												</div>
@@ -74,7 +89,9 @@ export default function ViewCourse({}: Props) {
 													Akshay Saini
 													<br />
 													<span className="text-indigo-200 text-base font-light">
-														Namaste React & Namaste js
+														Namaste
+														React &
+														Namaste js
 													</span>
 												</p>
 											</div>
@@ -93,7 +110,7 @@ export default function ViewCourse({}: Props) {
 
 							<Image
 								alt="not found"
-								src={`/${selectedCoures[0]?.image}`}
+								src={`${selectedCoures[0]?.image}`}
 								width={360}
 								height={240}
 								className="h-full w-full object-cover overflow-hidden rounded-full"

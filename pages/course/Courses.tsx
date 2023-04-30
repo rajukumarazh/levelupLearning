@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import { useState } from 'react';
-import Link from 'next/link';
-import connectDB from '@/utils/connectDB';
-import Course from '@/Models/Course';
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+import Link from "next/link";
+import connectDB from "@/utils/connectDB";
+import Course from "@/Models/Course";
+import Image from "next/image";
 // {
 //     name: string,
 //     image:string,
@@ -44,10 +45,18 @@ export default function Courses(props: Props[]) {
 			<div>
 				<div className="bg-white shadow-md border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
 					<Link href={`/course/${props?.data?._id}`}>
-						<img
+						{/* <img
 							className="rounded-t-lg"
-							src="https://flowbite.com/docs/images/blog/image-1.jpg"
+							// src="https://flowbite.com/docs/images/blog/image-1.jpg"
+							src={`./${props?.data?.image}`}
 							alt=""
+						/> */}
+						<Image
+							alt="not found"
+							src={`${props?.data?.image}`}
+							width={120}
+							height={50}
+							className="rounded-t-lg w-full h-40"
 						/>
 					</Link>
 					<div className="p-2">
@@ -65,8 +74,9 @@ export default function Courses(props: Props[]) {
 							</p>
 						</div>
 						<p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-							Here are the biggest enterprise technology acquisitions of 2021 so
-							far, in reverse chronological order.
+							Here are the biggest enterprise technology
+							acquisitions of 2021 so far, in reverse
+							chronological order.
 						</p>
 						{/* <a
 							href="#"
