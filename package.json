@@ -23,7 +23,7 @@
     "iron-session": "^6.3.1",
     "mongodb": "^5.2.0",
     "mongoose": "^7.0.3",
-    "next": "^13.3.1",
+    "next": "^13.3.2",
     "next-iron-session": "^4.2.0",
     "next-redux-wrapper": "^8.1.0",
     "nextjs-cors": "^2.1.2",
