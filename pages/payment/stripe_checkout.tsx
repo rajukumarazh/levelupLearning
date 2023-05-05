@@ -95,10 +95,29 @@ export default function Checkout(props: any) {
 			router.push('/auth/Login');
 		}
 	}, [props]);
+	const CARD_ELEMENT_OPTIONS = {
+		hidePostalCode: true,
+		style: {
+			base: {
+				color: '#32325d',
+				fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+				fontSmoothing: 'antialiased',
+				innerWidth: '400px',
+				fontSize: '16px',
+				'::placeholder': {
+					color: '#aab7c4',
+				},
+			},
+			invalid: {
+				color: '#fa755a',
+				iconColor: '#fa755a',
+			},
+		},
+	};
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
-				<label>
+				<label className="underline-offset-0 text-red-500">
 					Amount: {`${allState?.courses?.current_course[0].price}`}&nbsp; &nbsp;
 					{/* <input
 						type="number"
@@ -107,7 +126,7 @@ export default function Checkout(props: any) {
 
 					/> */}
 				</label>
-				<CardElement options={{ hidePostalCode: true }} />
+				<CardElement options={CARD_ELEMENT_OPTIONS} />
 			</form>
 			<button
 				onClick={handlePayment}

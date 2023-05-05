@@ -1077,10 +1077,8 @@ export default function (props: Props[]) {
 												labelledBy="Color"
 											/>
 										</div>
-
 										{/* <div className="border-b border-gray-200 py-6"> */}
 										<span className="font-medium text-gray-900">Tutor</span>
-
 										<MultiSelect
 											options={Tutors}
 											value={selectedOptions.tutors}

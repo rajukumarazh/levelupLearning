@@ -27,7 +27,9 @@ export default function Login({}: Props) {
 		console.log('helloResponse', res);
 		if (res?.data?.ok === true) {
 			dispatch(add_login_status({ status: true, user: res?.data }));
+			localStorage.setItem('currentUser', JSON.stringify(res?.data));
 			return router.push('/scratch/Filter');
+
 			// return router.back();
 		}
 	}

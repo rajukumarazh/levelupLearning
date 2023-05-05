@@ -26,9 +26,9 @@ POST http://localhost:3000/api/payment/enrollments HTTP/1.1
 content-type: application/json
 
 {
-  "user":"rajukumar",
-  "user_id":"64465e44134a166ea77f3a03",
-  "course_id":"643fe3e02adf10305cd268f0"
+  "user":"rajukumarddd",
+  "user_id":"644668f1134a166ea77f3a07",
+  "course_id":"643fe4812adf10305cd268f8"
 }
 
 #########
@@ -36,7 +36,28 @@ POST http://localhost:3000/api/levelup/CourseData/theory HTTP/1.1
 content-type: application/json
 
 {
-  "chapter":"rajukumar",
-  "details":"hello student your chapter is here",
+  "chapter":"Introduction",
+  "details":"about javascriptdfdf ",
   "course_id":"643fe3e02adf10305cd268f0"
+}
+
+########
+POST http://localhost:3000/api/levelup/CourseData/questionBank/ HTTP/1.1
+content-type: application/json
+
+{
+  "chaper":"Introduction",
+  "chaper_theory":"about javascriptdfdf ",
+  "course_id":"643fe3e02adf10305cd268f0"
+}
+
+#####
+GET https://example.com/comments/1 HTTP/1.1
+
+######
+POST http://localhost:3000/api/levelup/CourseData/theory/ HTTP/1.1
+content-type: application/json
+
+{
+ "course":"643fe3e02adf10305cd268f0"
 }

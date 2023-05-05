@@ -1,9 +1,42 @@
 import React from 'react';
-import GroupedBarChart from './stats/GroupedBarChart';
-
 type Props = {};
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Courses from './Courses';
+import Link from 'next/link';
+import Image from 'next/image';
+import UserStats from './stats/UserStats';
+import CourseData from './CourseData';
+import Theory from '@/Models/Reports';
 
-export default function Ongoing_course({}: Props) {
+export default function Ongoing_course(props: any) {
+	console.log('enrolledData', props?.enrolled_course);
+	const [user, setCurrentUser] = useState();
+	const [enrolledCourse, setEnrolledCourse] = useState();
+	const [currenPage, setCurrentPage] = useState('Dash');
+	const [currentCourse, setCurrentCoures] = useState({
+		coures_id: '',
+		course: '',
+	});
+	const [theory, setTheory] = useState();
+	console.log('current', currenPage);
+	let route = useRouter();
+	console.log('rotuer', enrolledCourse);
+	useEffect(() => {
+		let user = localStorage.getItem('currentUser');
+		let ds = JSON.parse(user);
+		setCurrentUser(ds);
+	}, []);
+	function viewOngoingCourse(id: any) {
+		setCurrentPage('CurrentCourse');
+		console.log('id', id);
+		setCurrentCoures({
+			...currentCourse,
+			course: props?.enrolled_course?.filter((curr) => curr?.course_id === id),
+		});
+	}
+	console.log('currentCoruse', currentCourse);
 	return (
 		<div>
 			<aside className="flex">
@@ -11,9 +44,8 @@ export default function Ongoing_course({}: Props) {
 					<a href="#">
 						<img className="w-22 h-14" src="/angular.jpg" alt="not found" />
 					</a>
-
-					<a
-						href="#"
+					<button
+						onClick={() => setCurrentPage('Dash')}
 						className="p-1.5 text-gray-500 focus:outline-nones transition-colors duration-200 rounded-lg dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100"
 					>
 						<svg
@@ -30,10 +62,10 @@ export default function Ongoing_course({}: Props) {
 								d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
 							/>
 						</svg>
-					</a>
+					</button>
 
-					<a
-						href="#"
+					<button
+						onClick={() => setCurrentPage('Home')}
 						className="p-1.5 text-blue-500 transition-colors duration-200 bg-blue-100 rounded-lg dark:text-blue-400 dark:bg-gray-800"
 					>
 						<svg
@@ -50,10 +82,10 @@ export default function Ongoing_course({}: Props) {
 								d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
 							/>
 						</svg>
-					</a>
+					</button>
 
-					<a
-						href="#"
+					<button
+						onClick={() => setCurrentPage('CurrentCourse')}
 						className="p-1.5 text-gray-500 focus:outline-nones transition-colors duration-200 rounded-lg dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100"
 					>
 						<svg
@@ -75,7 +107,7 @@ export default function Ongoing_course({}: Props) {
 								d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
 							/>
 						</svg>
-					</a>
+					</button>
 
 					<a
 						href="#"
@@ -122,31 +154,34 @@ export default function Ongoing_course({}: Props) {
 						</svg>
 					</a>
 				</div>
-				<div className="h-screen py-8 overflow-y-auto bg-white border-l border-r sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700">
+				<div className="h-screen py-8 overflow-y-auto bg-white border-l border-r sm:w-64 w-96 dark:bg-gray-900 dark:border-gray-700 ">
 					<h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">
 						Sections
 					</h2>
-
+					{console.log('theiory', theory)}
 					<div className="mt-8 space-y-4">
-						<button className="flex items-center w-full px-5 py-2 transition-colors duration-200 dark:hover:bg-gray-800 gap-x-2 hover:bg-gray-100 focus:outline-none">
-							<img
-								className="object-cover w-8 h-8 rounded-full"
-								src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=faceare&facepad=3&w=688&h=688&q=100"
-								alt=""
-							/>
+						{currentCourse?.course[0]?.course_theories?.map((curr) => {
+							return (
+								<button
+									onClick={() => setTheory(curr?.chapter)}
+									className="flex items-center w-full px-5 py-2 transition-colors duration-200 dark:hover:bg-gray-800 gap-x-2 hover:bg-gray-100 focus:outline-none"
+								>
+									<img
+										className="object-cover w-8 h-8 rounded-full"
+										src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=faceare&facepad=3&w=688&h=688&q=100"
+										alt=""
+									/>
 
-							<div className="text-left rtl:text-right">
-								<h1 className="text-sm font-medium text-gray-700 capitalize dark:text-white">
-									Mia John
-								</h1>
+									<div className="text-left rtl:text-right">
+										<h1 className="text-sm font-medium text-gray-700 capitalize dark:text-white">
+											{curr?.chapter}
+										</h1>
+									</div>
+								</button>
+							);
+						})}
 
-								<p className="text-xs text-gray-500 dark:text-gray-400">
-									11.2 Followers
-								</p>
-							</div>
-						</button>
-
-						<button className="flex items-center w-full px-5 py-2 transition-colors duration-200 dark:hover:bg-gray-800 gap-x-2 hover:bg-gray-100 focus:outline-none">
+						{/* <button className="flex items-center w-full px-5 py-2 transition-colors duration-200 dark:hover:bg-gray-800 gap-x-2 hover:bg-gray-100 focus:outline-none">
 							<img
 								className="object-cover w-8 h-8 rounded-full"
 								src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&h=880&q=80"
@@ -261,14 +296,112 @@ export default function Ongoing_course({}: Props) {
 									56.6 Followers
 								</p>
 							</div>
-						</button>
+						</button> */}
 					</div>
 				</div>
-				<div className="">
-					component
-					{/* <GroupedBarChart /> */}
-				</div>
+
+				{currenPage == 'Dash' ? (
+					<UserStats />
+				) : currenPage == 'CurrentCourse' ? (
+					<CourseData
+						course={currentCourse?.course[0]?.course_theories?.filter(
+							(curr) => curr?.chapter == theory
+						)}
+					/>
+				) : (
+					<div className=" flex flex-wrap">
+						{props?.enrolled_course?.map((curr) => {
+							return (
+								<div className="">
+									<div className="w-64 mx-1 p-2 bg-white">
+										<div>
+											<div className="bg-white shadow-md border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
+												<button onClick={() => setCurrentPage('')}>
+													{/* <img
+							className="rounded-t-lg"
+							// src="https://flowbite.com/docs/images/blog/image-1.jpg"
+							src={`./${curr?.image}`}
+							alt=""
+						/> */}
+													<Image
+														alt="not found"
+														src={`${curr?.enrolled_course[0].image}`}
+														width={120}
+														height={50}
+														className="rounded-t-lg w-full h-40"
+													/>
+												</button>
+												<div className="p-2">
+													{/* <a href="#">
+							<h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
+								Noteworthy technology acquisitions 2021
+							</h5>
+						</a> */}
+													<div className="flex justify-between">
+														<h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
+															{curr?.enrolled_course[0].name}
+														</h5>
+														{/* <p className="text-red-500 underline p-1 bg-white font-extrabold">
+														Rs &nbsp;{curr?.price}
+													</p> */}
+													</div>
+													<p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
+														Here are the biggest enterprise technology
+														acquisitions of 2021 so far, in reverse
+														chronological order.
+													</p>
+													{/* <a
+							href="#"
+							className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+						>
+							Read more
+							<svg
+								className="-mr-1 ml-2 h-4 w-4"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+									clip-rule="evenodd"
+								></path>
+							</svg>
+						</a> */}
+
+													<div className="flex justify-center">
+														<button
+															onClick={() => viewOngoingCourse(curr?.course_id)}
+															className="bg-blue-500 px-2 py-2 text-white rounded-lg w-52  "
+															// onClick={() => getData()}
+														>
+															Explore
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				)}
+				<hr />
 			</aside>
 		</div>
 	);
+}
+export async function getServerSideProps(context: any) {
+	let dt = await axios
+		.post('http://localhost:3000/api/payment/enrollments', {
+			userid: context?.query?.user_id,
+		})
+		.then((res) => res?.data);
+
+	return {
+		props: {
+			enrolled_course: dt,
+		},
+	};
 }

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { withSessionSsr } from '@/lib/config/withSession';
 import { useRouter } from 'next/router';
 import { add_login_status } from '../../lib/toolkit/CourseSlice';
@@ -18,6 +18,7 @@ type IUser = {
 };
 export default function Navigation(props: any) {
 	let [authStatus, setAuthStatus] = useState();
+	let [current, setCurrent] = useState();
 	const [profile, setProfile] = useState<IUser>({ profileOptions: false });
 	console.log('hellonavigationProps', props);
 	// setAuthStatus(res);
@@ -26,10 +27,16 @@ export default function Navigation(props: any) {
 	let dispatch = useDispatch();
 	console.log('allSate', AllState);
 
+	useEffect(() => {
+		let dts = localStorage.getItem('currentUser');
+		setCurrent(JSON.parse(dts));
+	}, []);
+	console.log('dtsss', current);
 	async function logout(): any {
 		let res = await axios.get('/api/auth/logout').then((res) => res);
 
 		setProfile({ ...profile, profileOptions: !profile?.profileOptions });
+		localStorage.removeItem('currentUser');
 		if (res?.data?.ok == true) {
 			dispatch(add_login_status({ status: false, user: [] }));
 			router.push('/');
@@ -241,6 +248,29 @@ export default function Navigation(props: any) {
 										>
 											Network
 										</button>
+
+										<Link
+											// href={`/course/Ongoing_course?id${current?.data?._id}`}
+											href={{
+												pathname: `/course/Ongoing_course`,
+												query: {
+													user_id: current?.data?._id, // should be `title` not `id`
+												},
+											}}
+											as={`/course/Ongoing_course/${current?.data?._id}`}
+											// onClick={() =>
+											// 	setSelectedOptions({
+											// 		...selectedOptions,
+											// 		sortBy: "LTH",
+											// 	})
+											// }
+											className="text-gray-500 block px-4 py-2 text-sm"
+											role="menuitem"
+											tabIndex={-1}
+											id="menu-item-3"
+										>
+											Dashboard
+										</Link>
 										{AllState?.courses?.isLogIn === true ? (
 											<div
 												className="flex justify-center gap-10 "

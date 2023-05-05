@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { useState } from "react";
-import Link from "next/link";
-import connectDB from "@/utils/connectDB";
-import Course from "@/Models/Course";
-import Image from "next/image";
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
+import Link from 'next/link';
+import connectDB from '@/utils/connectDB';
+import Course from '@/Models/Course';
+import Image from 'next/image';
 // {
 //     name: string,
 //     image:string,
@@ -74,9 +74,8 @@ export default function Courses(props: Props[]) {
 							</p>
 						</div>
 						<p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-							Here are the biggest enterprise technology
-							acquisitions of 2021 so far, in reverse
-							chronological order.
+							Here are the biggest enterprise technology acquisitions of 2021 so
+							far, in reverse chronological order.
 						</p>
 						{/* <a
 							href="#"
