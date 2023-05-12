@@ -9,6 +9,8 @@ const CourseSlice = createSlice({
 		isLogIn: false,
 		current_user: [],
 		current_course: [],
+		answered_question: [],
+		totalEarnedMarks: 0,
 	},
 	reducers: {
 		increment: (state) => {
@@ -30,6 +32,25 @@ const CourseSlice = createSlice({
 		add_current_course: (state, action) => {
 			state.current_course = action.payload;
 		},
+		add_answered_question: (state, action) => {
+			var dt = [...state?.answered_question, action.payload]
+				.flat(1)
+				.sort((a, b) => {
+					return a.id != b.id;
+				});
+			const uniqueData = Object.values(
+				dt.reduce((acc, obj) => {
+					acc[obj.id] = obj;
+					return acc;
+				}, {})
+			);
+			state.answered_question = uniqueData;
+			let dst = state?.answered_question?.filter(
+				(curr) => curr?.correctAnswer === curr?.choosen
+			).length;
+			state.totalEarnedMarks = dst;
+			console.log('dst', dst);
+		},
 	},
 });
 export default CourseSlice;
@@ -39,4 +60,5 @@ export const {
 	add_all_courses,
 	add_login_status,
 	add_current_course,
+	add_answered_question,
 } = CourseSlice.actions;

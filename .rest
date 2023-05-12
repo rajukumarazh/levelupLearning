@@ -55,9 +55,9 @@ content-type: application/json
 GET https://example.com/comments/1 HTTP/1.1
 
 ######
-POST http://localhost:3000/api/levelup/CourseData/theory/ HTTP/1.1
+POST http://localhost:3000/api/payment/reports/ HTTP/1.1
 content-type: application/json
 
 {
- "course":"643fe3e02adf10305cd268f0"
+ "user_id":"644668f1134a166ea77f3a07"
 }

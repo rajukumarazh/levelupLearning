@@ -20,7 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		const data = req.body;
 
 		let dt = await Enrollment.create(data);
-		console.log('daataaaa', data);
+		console.log('data', data);
 		try {
 			res.status(200).json({
 				message: ' Now You are successfully registered with this course!!',
@@ -38,7 +38,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	) => {
 		let data = req.body;
 		console.log('daataaaa', data);
-		let receiveddata = await Enrollment.find();
+		// let receiveddata = await Enrollment.find();
 		const result = await Enrollment.aggregate([
 			{
 				$lookup: {
@@ -59,7 +59,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		]);
 		let courses = result
 			?.filter((curr) => {
-				if (curr?.user_id.toString() === req.body?.userid) {
+				if (curr?.user_id?.toString() === data?.userid) {
 					return {
 						curr,
 					};

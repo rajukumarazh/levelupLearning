@@ -1,57 +1,51 @@
-import React from "react";
+import React from 'react';
 type Props = {};
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Courses from "./Courses";
-import Link from "next/link";
-import Image from "next/image";
-import UserStats from "./stats/UserStats";
-import CourseData from "./CourseData";
-import Theory from "@/Models/Reports";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Courses from './Courses';
+import Link from 'next/link';
+import Image from 'next/image';
+import UserStats from './stats/UserStats';
+import CourseData from './CourseData';
+import Theory from '@/Models/Reports';
 
 export default function Ongoing_course(props: any) {
-	console.log("enrolledData", props?.enrolled_course);
+	console.log('enrolledData', props?.enrolled_course);
 	const [user, setCurrentUser] = useState();
 	const [enrolledCourse, setEnrolledCourse] = useState();
-	const [currenPage, setCurrentPage] = useState("Dash");
+	const [currenPage, setCurrentPage] = useState('Dash');
 	const [currentCourse, setCurrentCoures] = useState({
-		coures_id: "",
-		course: "",
+		coures_id: '',
+		course: '',
 	});
 	const [theory, setTheory] = useState();
-	console.log("current", currenPage);
+	console.log('current', currenPage);
 	let route = useRouter();
-	console.log("rotuer", enrolledCourse);
+	console.log('rotuer', enrolledCourse);
 	useEffect(() => {
-		let user = localStorage.getItem("currentUser");
+		let user = localStorage.getItem('currentUser');
 		let ds = JSON.parse(user);
 		setCurrentUser(ds);
 	}, []);
 	function viewOngoingCourse(id: any) {
-		setCurrentPage("CurrentCourse");
-		console.log("id", id);
+		setCurrentPage('CurrentCourse');
+		console.log('id', id);
 		setCurrentCoures({
 			...currentCourse,
-			course: props?.enrolled_course?.filter(
-				(curr) => curr?.course_id === id,
-			),
+			course: props?.enrolled_course?.filter((curr) => curr?.course_id === id),
 		});
 	}
-	console.log("currentCoruse", currentCourse);
+	console.log('currentCoruse', currentCourse);
 	return (
 		<div>
 			<aside className="flex">
 				<div className="flex flex-col items-center w-16 h-screen py-8 space-y-8 bg-white dark:bg-gray-900 dark:border-gray-700">
 					<a href="#">
-						<img
-							className="w-22 h-14"
-							src="/angular.jpg"
-							alt="not found"
-						/>
+						<img className="w-22 h-14" src="/angular.jpg" alt="not found" />
 					</a>
 					<button
-						onClick={() => setCurrentPage("Dash")}
+						onClick={() => setCurrentPage('Dash')}
 						className="p-1.5 text-gray-500 focus:outline-nones transition-colors duration-200 rounded-lg dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100"
 					>
 						<svg
@@ -71,7 +65,7 @@ export default function Ongoing_course(props: any) {
 					</button>
 
 					<button
-						onClick={() => setCurrentPage("Home")}
+						onClick={() => setCurrentPage('Home')}
 						className="p-1.5 text-blue-500 transition-colors duration-200 bg-blue-100 rounded-lg dark:text-blue-400 dark:bg-gray-800"
 					>
 						<svg
@@ -91,7 +85,7 @@ export default function Ongoing_course(props: any) {
 					</button>
 
 					<button
-						onClick={() => setCurrentPage("CurrentCourse")}
+						onClick={() => setCurrentPage('CurrentCourse')}
 						className="p-1.5 text-gray-500 focus:outline-nones transition-colors duration-200 rounded-lg dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100"
 					>
 						<svg
@@ -164,32 +158,28 @@ export default function Ongoing_course(props: any) {
 					<h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">
 						Sections
 					</h2>
-					{console.log("theiory", theory)}
+					{console.log('theiory', theory)}
 					<div className="mt-8 space-y-4">
-						{currentCourse?.course[0]?.course_theories?.map(
-							(curr) => {
-								return (
-									<button
-										onClick={() =>
-											setTheory(curr?.chapter)
-										}
-										className="flex items-center w-full px-5 py-2 transition-colors duration-200 dark:hover:bg-gray-800 gap-x-2 hover:bg-gray-100 focus:outline-none"
-									>
-										<img
-											className="object-cover w-8 h-8 rounded-full"
-											src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=faceare&facepad=3&w=688&h=688&q=100"
-											alt=""
-										/>
+						{currentCourse?.course[0]?.course_theories?.map((curr) => {
+							return (
+								<button
+									onClick={() => setTheory(curr?.chapter)}
+									className="flex items-center w-full px-5 py-2 transition-colors duration-200 dark:hover:bg-gray-800 gap-x-2 hover:bg-gray-100 focus:outline-none"
+								>
+									<img
+										className="object-cover w-8 h-8 rounded-full"
+										src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=faceare&facepad=3&w=688&h=688&q=100"
+										alt=""
+									/>
 
-										<div className="text-left rtl:text-right">
-											<h1 className="text-sm font-medium text-gray-700 capitalize dark:text-white">
-												{curr?.chapter}
-											</h1>
-										</div>
-									</button>
-								);
-							},
-						)}
+									<div className="text-left rtl:text-right">
+										<h1 className="text-sm font-medium text-gray-700 capitalize dark:text-white">
+											{curr?.chapter}
+										</h1>
+									</div>
+								</button>
+							);
+						})}
 
 						{/* <button className="flex items-center w-full px-5 py-2 transition-colors duration-200 dark:hover:bg-gray-800 gap-x-2 hover:bg-gray-100 focus:outline-none">
 							<img
@@ -310,20 +300,18 @@ export default function Ongoing_course(props: any) {
 					</div>
 				</div>
 
-				{currenPage == "Dash" ? (
+				{currenPage == 'Dash' ? (
 					<UserStats />
-				) : currenPage == "CurrentCourse" ? (
+				) : currenPage == 'CurrentCourse' ? (
 					<CourseData
 						course={[
 							{
 								course: currentCourse?.course[0]?.course_theories?.filter(
-									(curr) => curr?.chapter == theory,
+									(curr) => curr?.chapter == theory
 								),
 							},
 							{
-								allChapter:
-									currentCourse?.course[0]
-										?.course_theories,
+								allChapter: currentCourse?.course[0]?.course_theories,
 							},
 						]}
 					/>
@@ -335,13 +323,7 @@ export default function Ongoing_course(props: any) {
 									<div className="w-64 mx-1 p-2 bg-white">
 										<div>
 											<div className="bg-white shadow-md border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
-												<button
-													onClick={() =>
-														setCurrentPage(
-															"",
-														)
-													}
-												>
+												<button onClick={() => setCurrentPage('')}>
 													{/* <img
 							className="rounded-t-lg"
 							// src="https://flowbite.com/docs/images/blog/image-1.jpg"
@@ -351,12 +333,8 @@ export default function Ongoing_course(props: any) {
 													<Image
 														alt="not found"
 														src={`${curr?.enrolled_course[0].image}`}
-														width={
-															120
-														}
-														height={
-															50
-														}
+														width={120}
+														height={50}
 														className="rounded-t-lg w-full h-40"
 													/>
 												</button>
@@ -368,28 +346,16 @@ export default function Ongoing_course(props: any) {
 						</a> */}
 													<div className="flex justify-between">
 														<h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
-															{
-																curr
-																	?.enrolled_course[0]
-																	.name
-															}
+															{curr?.enrolled_course[0].name}
 														</h5>
 														{/* <p className="text-red-500 underline p-1 bg-white font-extrabold">
 														Rs &nbsp;{curr?.price}
 													</p> */}
 													</div>
 													<p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-														Here are
-														the
-														biggest
-														enterprise
-														technology
-														acquisitions
-														of 2021 so
-														far, in
-														reverse
-														chronological
-														order.
+														Here are the biggest enterprise technology
+														acquisitions of 2021 so far, in reverse
+														chronological order.
 													</p>
 													{/* <a
 							href="#"
@@ -412,11 +378,7 @@ export default function Ongoing_course(props: any) {
 
 													<div className="flex justify-center">
 														<button
-															onClick={() =>
-																viewOngoingCourse(
-																	curr?.course_id,
-																)
-															}
+															onClick={() => viewOngoingCourse(curr?.course_id)}
 															className="bg-blue-500 px-2 py-2 text-white rounded-lg w-52  "
 															// onClick={() => getData()}
 														>
@@ -438,15 +400,24 @@ export default function Ongoing_course(props: any) {
 	);
 }
 export async function getServerSideProps(context: any) {
-	let dt = await axios
-		.post("http://localhost:3000/api/payment/enrollments", {
-			userid: context?.query?.user_id,
-		})
-		.then((res) => res?.data);
+	try {
+		const dt = await axios
+			.post('http://localhost:3000/api/payment/enrollments', {
+				userid: context?.query?.user_id,
+			})
+			.then((res) => res?.data);
 
-	return {
-		props: {
-			enrolled_course: dt,
-		},
-	};
+		return {
+			props: {
+				enrolled_course: dt,
+			},
+		};
+	} catch (error) {
+		console.error('Failed to fetch enrolled courses', error);
+		return {
+			props: {
+				enrolled_course: [],
+			},
+		};
+	}
 }

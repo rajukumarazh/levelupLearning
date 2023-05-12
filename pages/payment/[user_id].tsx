@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 type Props = {};
 import { useRouter } from 'next/router';
-export default function purchase_history({}: Props) {
-	let router = useRouter();
-	console.log('router/history', router);
+import useAxios from '@/Hooks/useAxios';
+
+export default function purchase_history(props) {
+	console.log('props', props);
+	// let router = useRouter();
+	// console.log('router/history', router);
 	// useEffect(() => {
 	// 	async function geTreports() {
 	// 		let history = await axios
@@ -16,6 +19,11 @@ export default function purchase_history({}: Props) {
 	// 	}
 	// 	geTreports();
 	// }, []);
+	// const { data, error, loading } = useAxios(
+	// 	'https://jsonplaceholder.typicode.com/users'
+	// );
+	// console.log('data', data);
+
 	return (
 		<div>
 			<section className="py-1 bg-blueGray-50">
@@ -143,9 +151,18 @@ export default function purchase_history({}: Props) {
 		</div>
 	);
 }
-// export async function getStaticProps() {
-// 	let reports = await axios.get('/api/payment/reports', { user_id: router?.query?.user_id });
-// 	return {
-// 		props: { reports },
-// 	};
-// }
+export async function getServerSideProps(context) {
+	try {
+		let reports = await axios.get(
+			'http://localhost:3000/api/payment/reports/',
+			{
+				user_id: context?.query?.user_id,
+			}
+		);
+		return { props: reports };
+	} catch (error) {
+		return {
+			props: { name: [] },
+		};
+	}
+}

@@ -204,7 +204,7 @@ export default function Navigation(props: any) {
 										</p>
 
 										<Link
-											href={`/payment/${AllState?.courses?.current_user?.data?._id}`}
+											href={`/payment/${current?.data?._id}`}
 											// onClick={() =>
 											// 	setSelectedOptions({
 											// 		...selectedOptions,

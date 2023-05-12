@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
-    "@types/plotly.js": "^2.12.18"
+    "@types/plotly.js": "^2.12.18",
+    "@types/react-plotly.js": "^2.6.0"
   }
 }
